@@ -1,14 +1,23 @@
 package com.sampson.osapi.domain.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class OrdemServico {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
     private Cliente cliente;
     private String descricao;
+    private BigDecimal preco;
+
+    @Enumerated(EnumType.STRING)
     private StatusOrdemServico status;
     private LocalDateTime dataAbertura;
     private LocalDateTime dataFinalizacao;
@@ -59,5 +68,26 @@ public class OrdemServico {
 
     public void setDataFinalizacao(LocalDateTime dataFinalizacao) {
         this.dataFinalizacao = dataFinalizacao;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrdemServico that = (OrdemServico) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
