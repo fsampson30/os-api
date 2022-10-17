@@ -3,6 +3,8 @@ package com.sampson.osapi.controller;
 import com.sampson.osapi.domain.model.OrdemServico;
 import com.sampson.osapi.domain.repository.OrdemServicoRepository;
 import com.sampson.osapi.domain.service.GestaoOrdemServicoService;
+import com.sampson.osapi.model.OrdemServicoModel;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,9 @@ public class OrdemServicoController {
     @Autowired
     private OrdemServicoRepository ordemServicoRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrdemServico criar(@Valid @RequestBody OrdemServico ordemServico){
@@ -34,11 +39,12 @@ public class OrdemServicoController {
     }
 
     @GetMapping("/{ordemServicoId}")
-    public ResponseEntity<OrdemServico> buscar(@PathVariable Long ordemServicoId){
+    public ResponseEntity<OrdemServicoModel> buscar(@PathVariable Long ordemServicoId){
         Optional<OrdemServico> ordemServico = ordemServicoRepository.findById(ordemServicoId);
 
         if (ordemServico.isPresent()) {
-            return ResponseEntity.ok(ordemServico.get());
+            OrdemServicoModel model = modelMapper.map(ordemServico.get(), OrdemServicoModel.class);
+            return ResponseEntity.ok(model);
         }
         return ResponseEntity.notFound().build();
     }
