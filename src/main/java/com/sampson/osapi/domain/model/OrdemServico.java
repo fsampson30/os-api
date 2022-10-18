@@ -3,6 +3,8 @@ package com.sampson.osapi.domain.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,6 +26,10 @@ public class OrdemServico {
 
     private OffsetDateTime dataAbertura;
     private OffsetDateTime dataFinalizacao;
+
+    @OneToMany(mappedBy = "ordemServico")
+    private List<Comentario> comentarios = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -79,6 +85,14 @@ public class OrdemServico {
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     @Override
