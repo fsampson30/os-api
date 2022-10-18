@@ -1,5 +1,6 @@
 package com.sampson.osapi.domain.service;
 
+import com.sampson.osapi.domain.exception.EntidadeNaoEncontradaException;
 import com.sampson.osapi.domain.exception.NegocioException;
 import com.sampson.osapi.domain.model.Cliente;
 import com.sampson.osapi.domain.model.Comentario;
@@ -39,7 +40,7 @@ public class GestaoOrdemServicoService {
 
     public Comentario adicionarComentario(Long ordemServicoId, String descricao) {
         OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId)
-                .orElseThrow( () -> new NegocioException("Ordem de serviço não encontrada"));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException("Ordem de serviço não encontrada"));
 
         Comentario comentario = new Comentario();
         comentario.setDataEnvio(OffsetDateTime.now());
