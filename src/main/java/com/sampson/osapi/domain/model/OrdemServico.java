@@ -1,5 +1,7 @@
 package com.sampson.osapi.domain.model;
 
+import com.sampson.osapi.domain.exception.NegocioException;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -106,5 +108,14 @@ public class OrdemServico {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void finalizar() {
+        if (!StatusOrdemServico.ABERTA.equals(getStatus())){
+            throw new NegocioException("Ordem de serviço não pode ser finalizada");
+        }
+        setStatus(StatusOrdemServico.FINALIZADA);
+        setDataFinalizacao(OffsetDateTime.now());
+
     }
 }
