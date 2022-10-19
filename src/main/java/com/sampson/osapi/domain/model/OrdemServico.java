@@ -124,6 +124,13 @@ public class OrdemServico {
         }
         setStatus(StatusOrdemServico.FINALIZADA);
         setDataFinalizacao(OffsetDateTime.now());
+    }
 
+    public void cancelar() {
+        if (naoPodeSerFinalizada()) {
+            throw new NegocioException("Ordem de serviço não pode ser cancelada");
+        }
+        setStatus(StatusOrdemServico.CANCELADA);
+        setDataFinalizacao(OffsetDateTime.now());
     }
 }

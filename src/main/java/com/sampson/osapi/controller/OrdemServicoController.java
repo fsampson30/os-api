@@ -58,6 +58,12 @@ public class OrdemServicoController {
         gestaoOrdemServicoService.finalizar(ordemServicoId);
     }
 
+    @PutMapping("/{ordemServicoId}/cancelamento")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelar(@PathVariable Long ordemServicoId) {
+        gestaoOrdemServicoService.cancelar(ordemServicoId);
+    }
+
     private OrdemServicoModel toModel(OrdemServico ordemServico) {
         return modelMapper.map(ordemServico, OrdemServicoModel.class);
     }

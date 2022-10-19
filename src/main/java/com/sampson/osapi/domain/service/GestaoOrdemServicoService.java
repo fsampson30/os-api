@@ -54,7 +54,12 @@ public class GestaoOrdemServicoService {
 
         ordemServico.finalizar();
         ordemServicoRepository.save(ordemServico);
+    }
 
+    public void cancelar(Long ordemServicoId) {
+        OrdemServico ordemServico = buscar(ordemServicoId);
+        ordemServico.cancelar();
+        ordemServicoRepository.save(ordemServico);
     }
 
     private OrdemServico buscar(Long ordemServicoId) {
